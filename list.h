@@ -182,7 +182,8 @@ template < class T>
 		for (int k = 0; k < M; k++)
 		{
 			for (int p = 0; p < N; p++)
-			{
+			{	
+				if(!f.good()) throw myException("Wrong file data.\n", EC_FILE);
 				f >> q;
 				if (q) list.pushLast(q, k, p);
 			}
