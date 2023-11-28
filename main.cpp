@@ -1,19 +1,35 @@
 #include "list.h"
 
+int M, N;
+
 int main()
 {
-	DList<double> a, b;
-	int k;
-	for (k = 0; k < 66; k++) {
-		a.PushFront(k);
+	try{
+		DList<double> a, b;
+		list<double> c, d;
+		ifstream f("input.txt");
+		if(!f.is_open()) throw myException("File input.txt doesn't exist.\n", EC_FILE);
+		f >> M >> N;
+		f >> a;
+		f >> b;
+		f.close();
+		a += b;
+		cout << a;
+		a = a * b;
+		cout << a;
 	}
-	for (k = 0; k < 63; k++) {
-		b.PushFront(k);
+	catch (bad_alloc)
+	{
+		throw myException("Memory allocation error\n", EC_MEMORY);
 	}
-	std::cout << a;
-	std::cout << a.getValue(5) << '\n';
-	std::cout << (a == b) << '\n';
-	b = a;
-	std::cout << b;
-    return 0;
+	catch (runtime_error)
+	{
+		throw myException("Runtime error\n", EC_MEMORY);
+	}
+	catch (myException e)
+	{
+		cout << e.getMessage();
+		return e.getCode();
+	}
+	return 0;
 }
