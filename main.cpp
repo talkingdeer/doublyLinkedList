@@ -1,22 +1,32 @@
 #include "list.h"
 
-int M, N;
-
 int main()
 {
 	try{
-		DList<double> a, b;
-		list<double> c, d;
+		Matrix<DList<Element>> a, b;
+//		Matrix<list<Element>> c;
+		
 		ifstream f("input.txt");
 		if(!f.is_open()) throw myException("File input.txt doesn't exist.\n", EC_FILE);
-		f >> M >> N;
 		f >> a;
 		f >> b;
 		f.close();
+		cout << a << b;
+		a.transpose();
+		cout << "Matrix a after transposing:" << endl << a;
+		
+		auto t1 = chrono::high_resolution_clock::now();
 		a += b;
-		cout << a;
+		cout << "Added b to a:" << endl << a;
 		a = a * b;
+		cout << "Multiplied a by b:" << endl << a;
 		cout << a;
+		auto t2 = chrono::high_resolution_clock::now();
+		
+		auto ns = chrono::duration_cast<chrono::nanoseconds>(t2 - t1);
+		std::cout << "Execution time for my own implementation is " <<  ns.count() << "ns\n";
+		
+		
 	}
 	catch (bad_alloc)
 	{
