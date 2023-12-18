@@ -4,28 +4,34 @@ int main()
 {
 	try{
 		Matrix<DList<Element>> a, b;
-//		Matrix<list<Element>> c;
+		Matrix<list<Element>> c, d;
 		
 		ifstream f("input.txt");
 		if(!f.is_open()) throw myException("File input.txt doesn't exist.\n", EC_FILE);
 		f >> a;
 		f >> b;
+		
+		f.clear();
+		f.seekg(0);
+		f >> c;
+		f >> d;
 		f.close();
-		cout << a << b;
-		a.transpose();
-		cout << "Matrix a after transposing:" << endl << a;
 		
 		auto t1 = chrono::high_resolution_clock::now();
-		a += b;
-		cout << "Added b to a:" << endl << a;
-		a = a * b;
-		cout << "Multiplied a by b:" << endl << a;
-		cout << a;
+		a.transpose();
 		auto t2 = chrono::high_resolution_clock::now();
 		
 		auto ns = chrono::duration_cast<chrono::nanoseconds>(t2 - t1);
 		std::cout << "Execution time for my own implementation is " <<  ns.count() << "ns\n";
 		
+		t1 = chrono::high_resolution_clock::now();
+		c.transpose();
+		t2 = chrono::high_resolution_clock::now();
+		
+		ns = chrono::duration_cast<chrono::nanoseconds>(t2 - t1);
+		std::cout << "Execution time for STL implementation is " <<  ns.count() << "ns\n";
+		
+		cout << "Transposed matrix a:" << endl << a;
 		
 	}
 	catch (bad_alloc)
