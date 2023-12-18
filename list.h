@@ -5,7 +5,7 @@
 #include <cmath>
 #include <ctime>
 #include <list>
-#include<chrono>
+#include <chrono>
 using namespace std;
 #include "exception.h"
 
@@ -121,7 +121,7 @@ public:
 		Iterator &operator--();
 		P &operator*()
 		{
-			return currentNode->value;
+			return currentNode->element;
 		}
 	};
 
@@ -527,7 +527,8 @@ Matrix<T> Matrix<T>::transpose()
 	c = row_size;
 	row_size = column_size;
 	column_size = c;
-	this -> matrix.transpose();
+	for(auto i = matrix.begin(); i != matrix.end(); ++i)
+		(*i).swapRowColumn();
 	return *this;
 }
 
